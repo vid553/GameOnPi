@@ -24,7 +24,7 @@ using Renci.SshNet;
 namespace GameOnPi
 {
     // TODO Testiraj delovanje gumba Seznani ta PC / Prekini seznanitev
-    // TODO Objavi na Github in dodaj LICENSE + Icon made by Freepik from www.flaticon.com  v readme
+    // TODO Dodaj LICENSE + Icon made by Freepik from www.flaticon.com  v readme
 
     public partial class MainScreen : Form
     {
@@ -176,7 +176,6 @@ namespace GameOnPi
             catch (Exception ex)
             {
                 MessageBox.Show("Napaka pri vzpostavitvi povezave z napravo.");
-                Console.WriteLine(ex.ToString());
                 infoLabel.Text = "Ni povezave :(";
                 infoLabel.Visible = true;
                 sshClient.Dispose();
@@ -350,7 +349,6 @@ namespace GameOnPi
                 IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName()).Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();   // dobimo ip pc-ja
                 SshCommand listCommand = client.CreateCommand("moonlight pair " + ip.ToString());
                 string result = listCommand.Execute();
-                Console.Write(result);
                 if (result.Contains("error"))
                 {
                     MessageBox.Show("Napaka pri seznanjanju.");
@@ -387,7 +385,6 @@ namespace GameOnPi
                 IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName()).Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();
                 SshCommand listCommand = client.CreateCommand("moonlight unpair " + ip.ToString());
                 string result = listCommand.Execute();
-                Console.Write(result);
                 if (result.Contains("error"))
                 {
                     MessageBox.Show("Napaka pri odstranjevanju povezave.");
@@ -474,7 +471,6 @@ namespace GameOnPi
         {
             string streamOutput = streamCommand.Execute();
             streamOutput = streamOutput.Replace("\n", "\r\n");
-            Console.Write(streamOutput);
         }
 
         private void UpdateGUI(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)    // funkcija za zagon niti pretakanja
@@ -564,7 +560,6 @@ namespace GameOnPi
             catch (Exception e)
             {
                 MessageBox.Show("Napaka pri branju datoteke z nastavitvami. Uporaba privzetih nastavitev...");
-                Console.WriteLine(e.ToString());
                 LoadDefaultParameters();
             }
            
@@ -576,7 +571,6 @@ namespace GameOnPi
             {
                 SshCommand listCommand = client.CreateCommand("moonlight quit");
                 listCommand.Execute();
-                Console.Write(listCommand.Result);
             }
             infoLabel.Visible = false;
             flowLayoutPanel1.Visible = true;
