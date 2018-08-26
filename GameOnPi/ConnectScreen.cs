@@ -8,15 +8,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOnPi
@@ -58,7 +50,7 @@ namespace GameOnPi
                 MainScreen.devicePassword = new NetworkCredential("", devicePassword).SecurePassword;
                 MainScreen.SaveSettingsFile();
                 label5.Visible = true;
-                this.Close();
+                Close();
             }
         }
 

@@ -8,13 +8,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOnPi
@@ -31,36 +24,20 @@ namespace GameOnPi
         {
             switch (MainScreen.resolution)
             {
-                case "720":
-                    resolutionList.SelectedIndex = 0;
+                case "720": resolutionList.SelectedIndex = 0;
                     break;
-                case "1080":
-                    resolutionList.SelectedIndex = 1;
+                case "1080": resolutionList.SelectedIndex = 1;
                     break;
-                case "4k":
-                    resolutionList.SelectedIndex = 2;
+                case "4k":  resolutionList.SelectedIndex = 2;
                     break;
-                default:
-                    resolutionList.SelectedIndex = 0;
+                default:    resolutionList.SelectedIndex = 0;
                     break;
             }
             fpsBox.Text = MainScreen.fps.ToString();
-            if (MainScreen.widthRes != 0)
-            {
-                widthField.Text = MainScreen.widthRes.ToString();
-            }
-            if (MainScreen.heightRes != 0)
-            {
-                heightField.Text = MainScreen.heightRes.ToString();
-            }
-            if (MainScreen.bitrate != 0)
-            {
-                bitrate.Text = MainScreen.bitrate.ToString();
-            }
-            if (MainScreen.packetsize != 0)
-            {
-                packetsize.Text = MainScreen.packetsize.ToString();
-            }
+            if (MainScreen.widthRes != 0) { widthField.Text = MainScreen.widthRes.ToString(); }
+            if (MainScreen.heightRes != 0) { heightField.Text = MainScreen.heightRes.ToString(); }
+            if (MainScreen.bitrate != 0) { bitrate.Text = MainScreen.bitrate.ToString(); }
+            if (MainScreen.packetsize != 0) { packetsize.Text = MainScreen.packetsize.ToString(); }
             codecList.SelectedItem = MainScreen.codec;
             remote.Checked = MainScreen.remote;
             nosops.Checked = MainScreen.nosops;
@@ -76,63 +53,39 @@ namespace GameOnPi
         {
             switch(resolutionList.SelectedIndex)
             {
-                case 0:
-                    MainScreen.resolution = "720";
+                case 0: MainScreen.resolution = "720";
                     break;
-                case 1:
-                    MainScreen.resolution = "1080";
+                case 1: MainScreen.resolution = "1080";
                     break;
-                case 2:
-                    MainScreen.resolution = "4k";
+                case 2: MainScreen.resolution = "4k";
                     break;
-                default:
-                    MainScreen.resolution = "720";
+                default: MainScreen.resolution = "720";
                     break;
             }
             if (fpsBox.Text != "")
             {
-               try {
-                    MainScreen.fps = Convert.ToInt32(fpsBox.Text);
-                }
-                catch {
-                    MessageBox.Show("Napaka pri vnosu FPS parametra. Vnesite primerno številko.");
-                }
+               try { MainScreen.fps = Convert.ToInt32(fpsBox.Text); }
+               catch { MessageBox.Show("Napaka pri vnosu FPS parametra. Vnesite primerno številko."); }
             }
             if (widthField.Text != "")
             {
-                try {
-                    MainScreen.widthRes = Convert.ToInt32(widthField.Text);
-                }
-                catch {
-                    MessageBox.Show("Napaka pri vnosu Širina videa parametra. Vnesite primerno številko.");
-                }
+                try {  MainScreen.widthRes = Convert.ToInt32(widthField.Text); }
+                catch { MessageBox.Show("Napaka pri vnosu Širina videa parametra. Vnesite primerno številko."); }
             }
             if (heightField.Text != "")
             {
-                try {
-                    MainScreen.heightRes = Convert.ToInt32(heightField.Text);
-                }
-                catch {
-                    MessageBox.Show("Napaka pri vnosu Višina videa parametra. Vnesite primerno številko.");
-                }
+                try { MainScreen.heightRes = Convert.ToInt32(heightField.Text); }
+                catch { MessageBox.Show("Napaka pri vnosu Višina videa parametra. Vnesite primerno številko."); }
             }
             if (bitrate.Text != "")
             {
-                try {
-                    MainScreen.bitrate = Convert.ToInt32(bitrate.Text);
-                }
-                catch {
-                    MessageBox.Show("Napaka pri vnosu bitrate parametra. Vnesite primerno številko.");
-                }
+                try { MainScreen.bitrate = Convert.ToInt32(bitrate.Text); }
+                catch { MessageBox.Show("Napaka pri vnosu bitrate parametra. Vnesite primerno številko."); }
             }
             if (packetsize.Text != "")
             {
-                try {
-                    MainScreen.packetsize = Convert.ToInt32(packetsize.Text);
-                }
-                catch {
-                    MessageBox.Show("Napaka pri vnosu packetsize parametra. Vnesite primerno številko.");
-                }
+                try { MainScreen.packetsize = Convert.ToInt32(packetsize.Text); }
+                catch { MessageBox.Show("Napaka pri vnosu packetsize parametra. Vnesite primerno številko."); }
             }
             MainScreen.codec = codecList.SelectedItem.ToString();
             MainScreen.localAudio = localAudio.Checked;
@@ -145,12 +98,12 @@ namespace GameOnPi
             MainScreen.gamePics = gamePics.Checked;
 
             MainScreen.SaveSettingsFile();
-            this.Close();
+            Close();
         }
 
         private void button2_Click(object sender, EventArgs e)  // klik na gumb Prekliči
         {
-            this.Close();
+            Close();
         }
 
         private void button3_Click(object sender, EventArgs e)  // klik na gumb Ponastavi

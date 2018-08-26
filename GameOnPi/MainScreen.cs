@@ -110,7 +110,7 @@ namespace GameOnPi
             gamePics = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)  // klik na gumb Poveži
+        private void button1_Click(object sender, EventArgs e)  // klik na gumb Poveži oz. Prekini povezavo
         {
             if (sshClient != null && sshClient.IsConnected)
             {
@@ -157,7 +157,8 @@ namespace GameOnPi
             {
                 if (deviceIp != null && deviceUsername != null && devicePassword != null)
                 {
-                    ConnectionInfo connectionInfo = new ConnectionInfo(deviceIp, deviceUsername, new PasswordAuthenticationMethod(deviceUsername, new NetworkCredential("", devicePassword).Password));
+                    ConnectionInfo connectionInfo = new ConnectionInfo(deviceIp, deviceUsername, 
+                        new PasswordAuthenticationMethod(deviceUsername, new NetworkCredential("", devicePassword).Password));
                     sshClient = new SshClient(connectionInfo);
                     sshClient.Connect();
                     if (sshClient.IsConnected == true)
@@ -167,7 +168,6 @@ namespace GameOnPi
                     }
                     else
                     {
-
                         infoLabel.Text = "Napaka! Preverite povezavo z napravo...";
                         infoLabel.Visible = true;
                     }
@@ -190,7 +190,8 @@ namespace GameOnPi
             infoLabel.Visible = false;
             if (gamePics == true)
             {
-                List<String> loadedGamePics = Directory.GetFiles("game_covers/").Select(Path.GetFileNameWithoutExtension).ToList();
+                List<String> loadedGamePics = 
+                    Directory.GetFiles("game_covers/").Select(Path.GetFileNameWithoutExtension).ToList();
                 int numOfPics = loadedGamePics.Count;
                 int numOfNew = gameList.Count;
                 int picsToLoad = numOfNew - numOfPics;
@@ -212,7 +213,8 @@ namespace GameOnPi
                         }
                     }
                 }
-                List<String> allGamePicsNames = Directory.GetFiles("game_covers/").Select(Path.GetFileNameWithoutExtension).ToList();
+                List<String> allGamePicsNames = 
+                    Directory.GetFiles("game_covers/").Select(Path.GetFileNameWithoutExtension).ToList();
                 for (int i = 0; i < allGamePicsNames.Count; i++)
                 {
                     Image gameImage = Image.FromFile("game_covers/" + allGamePicsNames[i] + ".jpg");
@@ -253,9 +255,10 @@ namespace GameOnPi
             
         }
 
-        private void DownloadGamePic(string searchGame) // prenesemo slike od novih iger iz igdb.com preko api-ja
+        private void DownloadGamePic(string searchGame) // prenesemo slike od novih iger iz igdb.com
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create("https://api-endpoint.igdb.com/games/?search=" + searchGame.Replace(" ", "%20"));
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest
+                .Create("https://api-endpoint.igdb.com/games/?search=" + searchGame.Replace(" ", "%20"));
             webRequest.Method = "GET";
             webRequest.Accept = "application/json";
             webRequest.Headers["user-key"] = igdbKey;
@@ -272,7 +275,8 @@ namespace GameOnPi
             int length = jsonResponse.IndexOf('}') - startPos;
             string id = jsonResponse.Substring(startPos, length);
 
-            HttpWebRequest webRequest2 = (HttpWebRequest)WebRequest.Create("https://api-endpoint.igdb.com/games/" +  id);
+            HttpWebRequest webRequest2 = (HttpWebRequest)WebRequest
+                .Create("https://api-endpoint.igdb.com/games/" +  id);
             webRequest2.Method = "GET";
             webRequest2.Accept = "application/json";
             webRequest2.Headers["user-key"] = igdbKey;
@@ -346,7 +350,8 @@ namespace GameOnPi
         {
             if (client != null || client.IsConnected == true)
             {
-                IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName()).Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();   // dobimo ip pc-ja
+                IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName())
+                    .Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();
                 SshCommand listCommand = client.CreateCommand("moonlight pair " + ip.ToString());
                 string result = listCommand.Execute();
                 if (result.Contains("error"))
@@ -382,7 +387,8 @@ namespace GameOnPi
         {
             if (client != null)
             {
-                IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName()).Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();
+                IPAddress ip = Dns.GetHostAddresses(Dns.GetHostName())
+                    .Where(address => address.AddressFamily == AddressFamily.InterNetwork).First();
                 SshCommand listCommand = client.CreateCommand("moonlight unpair " + ip.ToString());
                 string result = listCommand.Execute();
                 if (result.Contains("error"))
@@ -410,55 +416,28 @@ namespace GameOnPi
 
         private void StartStream(SshClient client, string game) // zaženemo stream z izbrano igro
         {
-            if (game.Contains(" "))
-            {
-                game = "'" + game + "'";
-            }
+            if (game.Contains(" ")) { game = "'" + game + "'"; }
             flowLayoutPanel1.Visible = false;
-            infoLabel.Text = "Za izhod iz pretakanja pritisnite: \n\nNa PC-ju: ALT in F12 \nNa Pi-ju: CTRL, ALT, SHIFT in Q";
+            infoLabel.Text = "Zagon igre...\n" +
+                "Za izhod iz pretakanja pritisnite: \n\n" +
+                "Na PC-ju: ALT in F12 \n" +
+                "Na Pi-ju: CTRL, ALT, SHIFT in Q";
             infoLabel.Visible = true;
+
             string optionalArgs = "";
-            if (widthRes > 0)
-            {
-                optionalArgs += "-width " + widthRes + " ";
-            }
-            if (heightRes > 0)
-            {
-                optionalArgs += "-height " + heightRes + " ";
-            }
-            if (bitrate > 0)
-            {
-                optionalArgs += "-bitrate " + bitrate + " ";
-            }
-            if (packetsize > 0)
-            {
-                optionalArgs += "-packetsize " + packetsize + " ";
-            }
-            if (codec != "auto")
-            {
-                optionalArgs += "-codec " + codec + " ";
-            }
-            if (remote == true)
-            {
-                optionalArgs += "-remote ";
-            }
-            if (nosops == false)
-            {
-                optionalArgs += "-nosops ";
-            }
-            if (localAudio == true)
-            {
-                optionalArgs += "-localaudio ";
-            }
-            if (sorround == true)
-            {
-                optionalArgs += "-sorround ";
-            }
-            if (platform != "auto")
-            {
-                optionalArgs += "-platform " + platform + " ";
-            }
-            streamCommand = client.CreateCommand("moonlight stream -" + resolution + " -fps " + fps +" -app " + game + " " + optionalArgs);
+            if (widthRes > 0) { optionalArgs += "-width " + widthRes + " "; }
+            if (heightRes > 0) { optionalArgs += "-height " + heightRes + " "; }
+            if (bitrate > 0) { optionalArgs += "-bitrate " + bitrate + " "; }
+            if (packetsize > 0) { optionalArgs += "-packetsize " + packetsize + " "; }
+            if (codec != "auto") { optionalArgs += "-codec " + codec + " "; }
+            if (remote == true) { optionalArgs += "-remote "; }
+            if (nosops == false) { optionalArgs += "-nosops "; }
+            if (localAudio == true) { optionalArgs += "-localaudio "; }
+            if (sorround == true) { optionalArgs += "-sorround "; }
+            if (platform != "auto") { optionalArgs += "-platform " + platform + " "; }
+
+            streamCommand = client.CreateCommand
+                ("moonlight stream -" + resolution + " -fps " + fps +" -app " + game + " " + optionalArgs);
 
             streamWorker = new BackgroundWorker();
             streamWorker.DoWork += BeginStream;
@@ -466,14 +445,13 @@ namespace GameOnPi
             streamWorker.RunWorkerAsync();
         }
 
-
-        private void BeginStream(object sender, System.ComponentModel.DoWorkEventArgs e)    // funkcija za zagon niti pretakanja
+        private void BeginStream(object sender, System.ComponentModel.DoWorkEventArgs e)    //zagon pretakanja v ozadju
         {
             string streamOutput = streamCommand.Execute();
             streamOutput = streamOutput.Replace("\n", "\r\n");
         }
 
-        private void UpdateGUI(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)    // funkcija za zagon niti pretakanja
+        private void UpdateGUI(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)    // konec pretakanja v ozadju
         {
             infoLabel.Visible = false;
             flowLayoutPanel1.Visible = true;
@@ -565,7 +543,7 @@ namespace GameOnPi
            
         }
 
-        private void ExitStream(SshClient client)   // stop stream aplikacije oziroma izhod iz programa
+        private void ExitStream(SshClient client)   // stop stream aplikacije oz. izhod iz programa
         {
             if (sshClient.IsConnected)
             {
@@ -596,7 +574,7 @@ namespace GameOnPi
                     ExitStream(sshClient);
                 }
                 sshClient.Dispose();
-                this.Dispose();
+                Dispose();
             }
         }
 
