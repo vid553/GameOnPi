@@ -25,6 +25,9 @@ namespace GameOnPi
 {
     // TODO Testiraj delovanje gumba Seznani ta PC / Prekini seznanitev
     // TODO Dodaj LICENSE + Icon made by Freepik from www.flaticon.com  v readme
+    // TODO Publish app + dodaj ikono
+    // TODO Preveri če direktorij game_covers obstaja in ga ustvari če ne
+    // TODO Probaj če dela brez interneta
 
     public partial class MainScreen : Form
     {
@@ -170,6 +173,7 @@ namespace GameOnPi
                     {
                         infoLabel.Text = "Napaka! Preverite povezavo z napravo...";
                         infoLabel.Visible = true;
+                        button1.Text = "Poveži se z napravo";
                     }
                 }
             }
@@ -177,6 +181,7 @@ namespace GameOnPi
             {
                 MessageBox.Show("Napaka pri vzpostavitvi povezave z napravo.");
                 infoLabel.Text = "Ni povezave :(";
+                button1.Text = "Poveži se z napravo";
                 infoLabel.Visible = true;
                 sshClient.Dispose();
                 sshClient = null;
@@ -585,6 +590,7 @@ namespace GameOnPi
                 if (sshClient != null && streamWorker != null)
                 {
                     ExitStream(sshClient);
+                    streamWorker.Dispose();
                 }
             }
         }
