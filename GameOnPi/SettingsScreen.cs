@@ -1,7 +1,7 @@
 ﻿/*
  * Game On Pi Application
  * 
- * Copyright (C) 2018 Vid Rajtmajer <vid.rajtmajer@gmail.com>
+ * Copyright (C) 2018 vid553 <vid.majster@gmail.com>
  * 
  * Icon made by Freepik from www.flaticon.com
  * Background Images from www.pexels.com

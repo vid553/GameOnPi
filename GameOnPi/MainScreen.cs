@@ -1,7 +1,7 @@
 ﻿/*
  * Game On Pi Application
  * 
- * Copyright (C) 2018 Vid Rajtmajer <vid.rajtmajer@gmail.com>
+ * Copyright (C) 2018 vid553 <vid.majster@gmail.com>
  * 
  * Icon made by Freepik from www.flaticon.com
  * Background Images from www.pexels.com
@@ -23,12 +23,6 @@ using Renci.SshNet;
 
 namespace GameOnPi
 {
-    // TODO Testiraj delovanje gumba Seznani ta PC / Prekini seznanitev
-    // TODO Dodaj LICENSE + Icon made by Freepik from www.flaticon.com  v readme
-    // TODO Publish app + dodaj ikono
-    // TODO Preveri če direktorij game_covers obstaja in ga ustvari če ne
-    // TODO Probaj če dela brez interneta
-
     public partial class MainScreen : Form
     {
         // Parametri za ssh povezavo
@@ -177,7 +171,7 @@ namespace GameOnPi
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Napaka pri vzpostavitvi povezave z napravo.");
                 infoLabel.Text = "Ni povezave :(";
@@ -195,6 +189,10 @@ namespace GameOnPi
             infoLabel.Visible = false;
             if (gamePics == true)
             {
+                if (Directory.Exists("game_covers/") == false)
+                {
+                    Directory.CreateDirectory("game_covers/");
+                }
                 List<String> loadedGamePics = 
                     Directory.GetFiles("game_covers/").Select(Path.GetFileNameWithoutExtension).ToList();
                 int numOfPics = loadedGamePics.Count;
@@ -540,7 +538,7 @@ namespace GameOnPi
                 Width = formWidth;
                 Height = formHeight;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Napaka pri branju datoteke z nastavitvami. Uporaba privzetih nastavitev...");
                 LoadDefaultParameters();
