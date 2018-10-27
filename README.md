@@ -2,9 +2,9 @@
 Play games on Raspberry Pi with Moonlight \
 \
 GameOnPi offers users to play their PC games on Raspberry Pi without typing Moonlight commands. \
-Made for Windows using .NET framework. \
+Made for Windows using .NET framework with [SSH.NET](https://github.com/sshnet/SSH.NET) and [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) libraries.  \
 Language of the app is Slovenian, will be translated to English soon. \
-It uses Moonlight embedded library: https://github.com/irtimmer/moonlight-embedded 
+It uses Moonlight embedded library: https://github.com/irtimmer/moonlight-embedded
 
 ### Features
 * Home - display list of all available games with their covers
