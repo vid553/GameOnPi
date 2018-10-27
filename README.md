@@ -20,7 +20,7 @@ It uses Moonlight embedded library: https://github.com/irtimmer/moonlight-embedd
 * Install Nvidia Geforce Experience
 * Open GeForce Experience and go to Settings/Shield and turn on GameStream
 * Install Moonlight on Rpi with my app InstallOnPi: https://github.com/vid553/InstallOnPi
-* Download release and run it.
+* Download release and run it
 
 ## License
 Project is licensed under [GNU GENERAL PUBLIC LICENSE v3](http://www.gnu.org/licenses/gpl-3.0.en.html). \
