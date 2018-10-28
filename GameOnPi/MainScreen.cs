@@ -123,7 +123,6 @@ namespace GameOnPi
                 devicePassword.Clear();
                 OpenConnectScreen();
             }
-            
         }
 
         private void OpenConnectScreen()    // odpremo okno za vzpostavitev povezave
